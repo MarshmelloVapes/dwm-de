@@ -1,0 +1,46 @@
+#!/bin/bash
+
+echo "Installing Requirements...\n"
+
+sudo pacman -S xorg xorg-xinit xorg-xrandr base-devel rofi alacritty bluez bluez-utils bluetui \
+firefox brightnessctl ttf-jetbrains-mono-nerd picom fish starship \
+thunar helix vim obsidian xpdf feh shotgun
+
+sudo systemctl enable --now bluetooth.service 
+
+mkdir ~/.install
+mkdir ~/.scripts
+
+sleep 2
+echo "Coping configs...\n"
+cp -r Configs/rofi ~/.config
+cp -r Configs/fish ~/.config
+cp -r Configs/helix ~/.config
+cp -r Configs/backgrounds ~/.config
+cp -r Configs/alacritty ~/.config
+cp Configs/starship.toml ~/.config
+
+cp Home/.xinitrc ~/.
+
+cp Scripts/autostart.sh ~/.scripts
+cp Scripts/volume.sh ~/.scripts
+
+sudo chmod +x ~/.scripts/autostart.sh
+sudo chmod +x ~/.scripts/volume.sh
+
+echo "DWM & DWMBLOCKS...\n"
+
+cp -r Installs/dwm ~/.install
+cp -r Installs/dwmblocks ~/.install
+
+cd ~/.install/dwm
+sudo make clean install
+
+echo "DWM Complete...\n"
+sleep 2
+
+cd ~/.install/dwmblocks
+sudo make clean install
+
+echo "DWMBLOCKS Complete...\n"
+echo "Script is done...\n"
