@@ -12,12 +12,3 @@ Install script should get everything all set up and installed. \
 
 This is a work in progress as I continue to learn DWM. The setup will change a lot. \
 
-### DWM Patches
-- Always center.
-- Move stack.
-- Status2D.
-- Autostart (script located in ~/.scripts folder)
-- No title.
-- Vanity gaps.
-- Fullscreen.
-- Restart Sig

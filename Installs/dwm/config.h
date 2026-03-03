@@ -66,17 +66,9 @@ static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "[M]",      monocle },
-	{ "[@]",      spiral },
 	{ "[\\]",     dwindle },
-	{ "H[]",      deck },
-	{ "TTT",      bstack },
-	{ "===",      bstackhoriz },
 	{ "HHH",      grid },
-	{ "###",      nrowgrid },
-	{ "---",      horizgrid },
-	{ ":::",      gaplessgrid },
 	{ "|M|",      centeredmaster },
-	{ ">M>",      centeredfloatingmaster },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ NULL,       NULL },
 };
@@ -120,14 +112,6 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,    					XK_i,      incrigaps,      {.i = -1 } },
 	{ MODKEY,              					XK_o,      incrogaps,      {.i = +1 } },
 	{ MODKEY|ShiftMask,    					XK_o,      incrogaps,      {.i = -1 } },
-	{ MODKEY|Mod3Mask,              XK_6,      incrihgaps,     {.i = +1 } },
-	{ MODKEY|Mod3Mask|ShiftMask,    XK_6,      incrihgaps,     {.i = -1 } },
-	{ MODKEY|Mod3Mask,              XK_7,      incrivgaps,     {.i = +1 } },
-	{ MODKEY|Mod3Mask|ShiftMask,    XK_7,      incrivgaps,     {.i = -1 } },
-	{ MODKEY|Mod3Mask,              XK_8,      incrohgaps,     {.i = +1 } },
-	{ MODKEY|Mod3Mask|ShiftMask,    XK_8,      incrohgaps,     {.i = -1 } },
-	{ MODKEY|Mod3Mask,              XK_9,      incrovgaps,     {.i = +1 } },
-	{ MODKEY|Mod3Mask|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },
 	{ MODKEY|Mod3Mask,              XK_0,      togglegaps,     {0} },
 	{ MODKEY|Mod3Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
@@ -144,6 +128,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	// Cycle layout
+	{ MODKEY,               XK_n,  cyclelayout, {.i = +1 } },
+  { MODKEY|ShiftMask,     XK_n,  cyclelayout, {.i = -1 } },
 	// Vol
 	{ 0,                       			XF86XK_AudioMute,      spawn,         SHCMD("pactl set-sink-mute 0 toggle; kill -44 $(pidof dwmblocks)") },
 	{ 0,                       			XF86XK_AudioRaiseVolume,      spawn,         SHCMD("pactl set-sink-volume 0 +5%; pkill -RTMIN+10 dwmblocks") },
