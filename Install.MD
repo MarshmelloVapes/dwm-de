@@ -3,7 +3,7 @@
 # Install
 xorg xorg-xinit xorg-xrandr base-devel rofi alacritty bluez bluez-utils bluetui \
 firefox brightnessctl ttf-jetbrains-mono-nerd picom fish starship thunar helix \
-vim shotgun
+vim shotgun udisk2 obsidian xpdf
 
 ### Notes
 Autostart script is located in the ~/.scripts folder. \

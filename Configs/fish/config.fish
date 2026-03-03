@@ -2,9 +2,9 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
     alias v nvim
     alias sv "sudo nvim"
-    alias dwmconf "nvim ~/build/dwm/config.h"
     alias ytaudio "yt-dlp -x --audio-format mp3"
     alias hx helix
+    alias sd "udisksctl mount -b /dev/mmcblk0p1"
 end
 
 function fish_greeting
