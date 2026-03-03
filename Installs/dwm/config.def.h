@@ -69,6 +69,7 @@ static const Layout layouts[] = {
 	{ "[\\]",     dwindle },
 	{ "HHH",      grid },
 	{ "|M|",      centeredmaster },
+	{ ">M>", centeredfloatingmaster },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ NULL,       NULL },
 };
