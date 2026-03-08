@@ -48,7 +48,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	{ "kitty",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
@@ -91,10 +91,16 @@ static const char *dmenucmd[] = { "~/.config/rofi/launchers/type-2/launcher.sh",
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *firefox[] = { "firefox", NULL };
 
+// Scratch Pad
+static const char scratchpadname[] = "scratchpad";
+static const char *scratchpadcmd[] = { "alacritty", "-t", scratchpadname, NULL };
+
+
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          SHCMD("~/.config/rofi/launchers/type-2/launcher.sh") },
 	{ MODKEY,                       XK_f,      spawn,          {.v = firefox } },
+	{ MODKEY,                       XK_s,  		 togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("shotgun -s ~/Photos/$(date +%Y-%m-%d_%H-%m-%S).png") },
 	{ MODKEY,             					XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
