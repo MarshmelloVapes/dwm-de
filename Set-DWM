@@ -24,6 +24,7 @@ cp Home/.xinitrc ~/.
 
 cp Scripts/autostart.sh ~/.scripts
 cp Scripts/volume.sh ~/.scripts
+cp Scripts/brightness.sh ~/.scripts
 
 sudo chmod +x ~/.scripts/autostart.sh
 sudo chmod +x ~/.scripts/volume.sh

@@ -49,6 +49,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "kitty",     NULL,       NULL,       0,            1,           -1 },
+  { "Thunar",     NULL,       NULL,       0,            1,          -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
@@ -90,6 +91,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "~/.config/rofi/launchers/type-2/launcher.sh", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *firefox[] = { "firefox", NULL };
+static const char *thunar[] = { "thunar", NULL };
 
 // Scratch Pad
 static const char scratchpadname[] = "scratchpad";
@@ -100,6 +102,7 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          SHCMD("~/.config/rofi/launchers/type-2/launcher.sh") },
 	{ MODKEY,                       XK_f,      spawn,          {.v = firefox } },
+  { MODKEY,                       XK_e,      spawn,          {.v = thunar } },
 	{ MODKEY,                       XK_s,  		 togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("shotgun -s ~/Photos/$(date +%Y-%m-%d_%H-%m-%S).png") },
 	{ MODKEY,             					XK_Return, spawn,          {.v = termcmd } },
@@ -144,8 +147,8 @@ static const Key keys[] = {
 	{ 0,                       			XF86XK_AudioLowerVolume,      spawn,         SHCMD("pactl set-sink-volume 0 -5%; pkill -RTMIN+10 dwmblocks") },
 	{ 0,                       			XF86XK_AudioMicMute,      spawn,         SHCMD("pactl set-source-mute 0 toggle") },
 	// Brightness
-	{ 0,                       			XF86XK_MonBrightnessUp,      spawn,         SHCMD("brightnessctl set 5%+") },
-	{ 0,                       			XF86XK_MonBrightnessDown,      spawn,         SHCMD("brightnessctl set 5%-") },
+	{ 0,                       			XF86XK_MonBrightnessUp,      spawn,         SHCMD("brightnessctl set 5%+; pkill -RTMIN+20 dwmblocks") },
+	{ 0,                       			XF86XK_MonBrightnessDown,      spawn,         SHCMD("brightnessctl set 5%-; pkill -RTMIN+20 dwmblocks") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
