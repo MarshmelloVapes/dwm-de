@@ -28,6 +28,7 @@ cp ./Scripts/brightness.sh ~/.scripts
 
 sudo chmod +x ~/.scripts/autostart.sh
 sudo chmod +x ~/.scripts/volume.sh
+sudo chmod +x ~/.scripts/brightness.sh
 
 echo "DWM & DWMBLOCKS...\n"
 
