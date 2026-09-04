@@ -1,0 +1,63 @@
+#!/bin/bash
+
+BATTERY=$(upower -e | grep 'battery_' | head -n 1)
+
+if [ -z "$BATTERY" ]; then
+    echo "󰂑 N/A"
+    exit 0
+fi
+
+INFO=$(upower -i "$BATTERY")
+
+PERCENT=$(echo "$INFO" | awk '/percentage:/ {gsub("%","",$2); print $2}')
+STATE=$(echo "$INFO" | awk '/state:/ {print $2}')
+
+TIME_RAW=$(echo "$INFO" | awk '/time to empty:/ {print $4}')
+
+if [ -n "$TIME_RAW" ]; then
+    HOURS=$(printf "%.0f" "$TIME_RAW")
+    MINUTES=$(awk "BEGIN {print int(($TIME_RAW - int($TIME_RAW)) * 60)}")
+    TIME="${HOURS}h ${MINUTES}m"
+fi
+
+# Select battery icon
+if [ "$PERCENT" -ge 90 ]; then
+    ICON="󰁹"
+elif [ "$PERCENT" -ge 80 ]; then
+    ICON="󰂂"
+elif [ "$PERCENT" -ge 70 ]; then
+    ICON="󰂁"
+elif [ "$PERCENT" -ge 60 ]; then
+    ICON="󰂀"
+elif [ "$PERCENT" -ge 50 ]; then
+    ICON="󰁿"
+elif [ "$PERCENT" -ge 40 ]; then
+    ICON="󰁾"
+elif [ "$PERCENT" -ge 30 ]; then
+    ICON="󰁽"
+elif [ "$PERCENT" -ge 20 ]; then
+    ICON="󰁼"
+elif [ "$PERCENT" -ge 10 ]; then
+    ICON="󰁻"
+else
+    ICON="󰂎"
+fi
+
+case "$STATE" in
+    charging)
+        echo "󰂄 ${PERCENT}% charging"
+        ;;
+    fully-charged)
+        echo "󰁹 ${PERCENT}% full"
+        ;;
+    discharging)
+        if [ -n "$TIME" ]; then
+            echo "$ICON ${PERCENT}% $TIME"
+        else
+            echo "$ICON ${PERCENT}%"
+        fi
+        ;;
+    *)
+        echo "$ICON ${PERCENT}%"
+        ;;
+esac

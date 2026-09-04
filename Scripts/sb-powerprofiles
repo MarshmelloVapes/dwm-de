@@ -1,0 +1,56 @@
+#!/bin/sh
+
+# Requires: power-profiles-daemon, powerprofilesctl
+# Optional: nerd-fonts / font-awesome for icons
+
+# Icons (nerd font / font-awesome style)
+ICON_PERFORMANCE=""   # or 󰓅 / ⚡
+ICON_BALANCED=""      # or 󰾅 / ⚖
+ICON_POWERSAVER=""    # or 󰌪 / 🍃
+ICON_UNKNOWN=""
+
+get_profile() {
+    powerprofilesctl get 2>/dev/null || echo "unknown"
+}
+
+case $BLOCK_BUTTON in
+    1) # Left click → cycle to next profile
+        current=$(get_profile)
+        case "$current" in
+            power-saver) powerprofilesctl set balanced ;;
+            balanced)    powerprofilesctl set performance ;;
+            performance) powerprofilesctl set power-saver ;;
+            *)           powerprofilesctl set balanced ;;
+        esac
+        pkill -RTMIN+13 dwmblocks  # force immediate update
+        ;;
+    2) # Middle click → open menu / list (optional)
+        notify-send "Power Profile" "$(powerprofilesctl)"
+        ;;
+    3) # Right click → cycle backwards
+        current=$(get_profile)
+        case "$current" in
+            power-saver) powerprofilesctl set performance ;;
+            balanced)    powerprofilesctl set power-saver ;;
+            performance) powerprofilesctl set balanced ;;
+            *)           powerprofilesctl set balanced ;;
+        esac
+        pkill -RTMIN+13 dwmblocks
+        ;;
+    6) # Shift + left click → edit this script
+        setsid -f "$TERMINAL" -e "$EDITOR" "$0"
+        ;;
+esac
+
+profile=$(get_profile)
+
+case "$profile" in
+    performance) icon="$ICON_PERFORMANCE" ;;
+    balanced)    icon="$ICON_BALANCED" ;;
+    power-saver) icon="$ICON_POWERSAVER" ;;
+    *)           icon="$ICON_UNKNOWN" ;;
+esac
+
+# Output (icon only is cleanest; add " $profile" if you want the name)
+printf "%s\n" "$icon"
+# printf "%s %s\n" "$icon" "$profile"

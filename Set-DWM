@@ -4,7 +4,7 @@ echo "Installing Requirements...\n"
 
 sudo pacman -S xorg xorg-xinit xorg-xrandr base-devel rofi alacritty bluez bluez-utils bluetui \
 firefox brightnessctl ttf-jetbrains-mono-nerd picom fish starship \
-thunar helix neovim obsidian xpdf feh shotgun udisks2 obsidian xpdf
+thunar helix neovim obsidian xpdf feh shotgun udisks2 obsidian xpdf unzip power-profiles-daemon yt-dlp
 
 sudo systemctl enable --now bluetooth.service 
 
@@ -13,22 +13,19 @@ mkdir ~/.scripts
 
 sleep 2
 echo "Coping configs...\n"
-cp -r ./Configs/rofi ~/.config
-cp -r ./Configs/fish ~/.config
-cp -r ./Configs/helix ~/.config
-cp -r ./Configs/backgrounds ~/.config
-cp -r ./Configs/alacritty ~/.config
-cp ./Configs/starship.toml ~/.config
+cp -r ./Configs/* ~/.config
 
-cp Home/.xinitrc ~/.
+cp ./Home/* ~/.
 
-cp ./Scripts/autostart.sh ~/.scripts
-cp ./Scripts/volume.sh ~/.scripts
-cp ./Scripts/brightness.sh ~/.scripts
+cp ./Scripts/* ~/.scripts
 
 sudo chmod +x ~/.scripts/autostart.sh
 sudo chmod +x ~/.scripts/volume.sh
 sudo chmod +x ~/.scripts/brightness.sh
+sudo chmod +x ~/.scripts/PPD.sh
+sudo chmod +x ~/.scripts/ppd-watcher
+sudo chmod +x ~/.scripts/sb-powerprofiles
+sudo chmod +x ~/.scripts/battery
 
 echo "DWM & DWMBLOCKS...\n"
 

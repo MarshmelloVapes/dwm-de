@@ -5,6 +5,7 @@ if status is-interactive
     alias ytaudio "yt-dlp -x --audio-format mp3"
     alias hx helix
     alias sd "udisksctl mount -b /dev/mmcblk0p1"
+    alias ppd "~/.scripts/PPD.sh"
 end
 
 function fish_greeting
@@ -20,5 +21,13 @@ function fish_prompt -d "Write out the prompt"
         (set_color $fish_color_comment) $hostname \
         (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)
 end
+
+if status is-login
+    udiskctl mount -b /dev/mmcblk0p1
+    if not set -q DISPLAY; and string match -r '^/dev/tty[0-9]$' (tty)
+        exec startx
+    end
+end
+
 
 starship init fish | source
