@@ -4,12 +4,16 @@ echo "Installing Requirements...\n"
 
 sudo pacman -S xorg xorg-xinit xorg-xrandr base-devel rofi alacritty bluez bluez-utils bluetui \
 firefox brightnessctl ttf-jetbrains-mono-nerd picom fish starship \
-thunar helix neovim obsidian xpdf feh shotgun udisks2 obsidian xpdf unzip power-profiles-daemon yt-dlp
+thunar neovim obsidian xpdf feh shotgun udisks2 obsidian xpdf unzip power-profiles-daemon yt-dlp
 
 sudo systemctl enable --now bluetooth.service 
 
 mkdir ~/.install
 mkdir ~/.scripts
+mkdir ~/Downloads
+mkdir ~/Documents
+mkdir ~/Videos
+mkdir ~/Pictures
 
 sleep 2
 echo "Coping configs...\n"
