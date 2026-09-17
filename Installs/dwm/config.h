@@ -49,8 +49,9 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "kitty",     NULL,       NULL,       0,            1,           -1 },
-  { "Thunar",     NULL,       NULL,       0,            1,          -1 },
+  	{ "Thunar",     NULL,       NULL,       0,            1,          -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "DwmCheatsheet", NULL, NULL, 0, 1, -1 },
 };
 
 /* layout(s) */
@@ -97,6 +98,16 @@ static const char *thunar[] = { "thunar", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "alacritty", "-t", scratchpadname, NULL };
 
+// Key Binds
+static const char *cheatsheetcmd[] = {
+    "alacritty",
+    "--class", "DwmCheatsheet",
+    "--title", "DWM Cheatsheet",
+    "-e",
+    "/home/josh/.scripts/dwm-cheatsheet",
+    NULL
+};
+
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -106,6 +117,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_s,  		 togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("shotgun -s ~/Photos/$(date +%Y-%m-%d_%H-%m-%S).png") },
 	{ MODKEY,             					XK_Return, spawn,          {.v = termcmd } },
+	// Key Binds
+	{ MODKEY, XK_F1, spawn, {.v = cheatsheetcmd } },
+
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

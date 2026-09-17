@@ -19,8 +19,10 @@ sleep 2
 echo "Coping configs...\n"
 cp -r ./Configs/* ~/.config
 
+echo "Coping Home Files...\n"
 cp ./Home/* ~/.
 
+echo "Coping Scripts...\n"
 cp ./Scripts/* ~/.scripts
 
 sudo chmod +x ~/.scripts/autostart.sh
@@ -30,6 +32,7 @@ sudo chmod +x ~/.scripts/PPD.sh
 sudo chmod +x ~/.scripts/ppd-watcher
 sudo chmod +x ~/.scripts/sb-powerprofiles
 sudo chmod +x ~/.scripts/battery
+sudo chmod +x ~/.scripts/dwm-cheatsheet
 
 echo "DWM & DWMBLOCKS...\n"
 

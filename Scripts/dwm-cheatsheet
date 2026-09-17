@@ -1,0 +1,184 @@
+#!/bin/bash
+
+# ============================================================
+# DWM CHEATSHEET
+# ============================================================
+#
+# Press q or ESC to close.
+#
+# This is designed for:
+#   - DWM
+#   - Alacritty
+#   - Gruvbox
+#   - JetBrainsMono Nerd Font
+#
+# ============================================================
+
+# Gruvbox colours
+RESET='\033[0m'
+
+FG='\033[38;2;242;229;188m'       # #f2e5bc
+MUTED='\033[38;2;146;131;116m'    # #928374
+RED='\033[38;2;204;36;29m'         # #cc241d
+GREEN='\033[38;2;152;151;26m'      # #98971a
+YELLOW='\033[38;2;215;153;33m'    # #d79921
+BLUE='\033[38;2;69;133;136m'       # #458588
+MAGENTA='\033[38;2;177;98;134m'   # #b16286
+AQUA='\033[38;2;104;157;106m'     # #689d6a
+
+# Formatting
+BOLD='\033[1m'
+DIM='\033[2m'
+
+clear
+
+# ------------------------------------------------------------
+# Header
+# ------------------------------------------------------------
+
+printf "\n"
+printf "${MAGENTA}${BOLD}"
+printf "╭──────────────────────────────────────────────────────────────╮\n"
+printf "│"
+printf "                     DWM CHEATSHEET                          "
+printf "│\n"
+printf "├──────────────────────────────────────────────────────────────┤${RESET}\n"
+
+# ------------------------------------------------------------
+# Helper functions
+# ------------------------------------------------------------
+
+section() {
+    printf "${BLUE}${BOLD}│  %-60s│${RESET}\n" "$1"
+}
+
+bind() {
+    printf "${FG}│  ${YELLOW}%-24s${FG} %-34s│${RESET}\n" "$1" "$2"
+}
+
+info() {
+    printf "${MUTED}│  %-60s│${RESET}\n" "$1"
+}
+
+separator() {
+    printf "${MAGENTA}├──────────────────────────────────────────────────────────────┤${RESET}\n"
+}
+
+# ------------------------------------------------------------
+# Applications
+# ------------------------------------------------------------
+
+section "APPLICATIONS"
+
+bind "Super + D"              "Application launcher"
+bind "Super + F"              "Firefox"
+bind "Super + E"              "Thunar"
+bind "Super + Enter"          "Terminal"
+bind "Super + S"              "Scratchpad"
+bind "Super + Shift + S"      "Screenshot"
+
+separator
+
+# ------------------------------------------------------------
+# Window management
+# ------------------------------------------------------------
+
+section "WINDOW MANAGEMENT"
+
+bind "Super + J"              "Focus next window"
+bind "Super + K"              "Focus previous window"
+bind "Super + Shift + J"      "Move window down"
+bind "Super + Shift + K"      "Move window up"
+bind "Super + Shift + Enter"  "Zoom / promote master"
+bind "Super + Q"              "Close focused window"
+bind "Super + B"              "Toggle status bar"
+bind "Super + Tab"            "Return to previous view"
+
+separator
+
+# ------------------------------------------------------------
+# Master area
+# ------------------------------------------------------------
+
+section "MASTER AREA"
+
+bind "Super + H"              "Decrease master size"
+bind "Super + L"              "Increase master size"
+bind "Super + Ctrl + I"       "Increase master clients"
+bind "Super + Ctrl + P"       "Decrease master clients"
+
+separator
+
+# ------------------------------------------------------------
+# Layouts
+# ------------------------------------------------------------
+
+section "LAYOUTS"
+
+bind "Super + Space"           "Select / change layout"
+bind "Super + N"               "Next layout"
+bind "Super + Shift + N"       "Previous layout"
+bind "Super + Shift + T"       "Tiling"
+bind "Super + Shift + B"       "Monocle"
+bind "Super + Shift + M"       "Dwindle"
+bind "Super + Shift + F"       "Fullscreen"
+bind "Super + Shift + Space"   "Toggle floating"
+
+info "Layouts: []=  [M]  [\\]  HHH  |M|  >M>  ><>" 
+
+separator
+
+# ------------------------------------------------------------
+# Monitors
+# ------------------------------------------------------------
+
+section "MONITORS"
+
+bind "Super + ,"               "Focus previous monitor"
+bind "Super + ."               "Focus next monitor"
+bind "Super + Shift + ,"       "Move window to previous monitor"
+bind "Super + Shift + ."       "Move window to next monitor"
+
+separator
+
+# ------------------------------------------------------------
+# DWM
+# ------------------------------------------------------------
+
+section "DWM"
+
+bind "Super + Shift + P"       "Quit DWM"
+bind "Super + Ctrl + Shift + Q" "Quit DWM + restart"
+
+separator
+
+# ------------------------------------------------------------
+# Footer
+# ------------------------------------------------------------
+
+printf "${MAGENTA}${BOLD}"
+printf "│"
+printf "                         "
+printf "${AQUA}ESC / Q${MAGENTA}"
+printf " = CLOSE"
+printf "                         "
+printf "│\n"
+
+printf "╰──────────────────────────────────────────────────────────────╯${RESET}\n"
+
+printf "\n"
+
+# ------------------------------------------------------------
+# Wait for exit
+# ------------------------------------------------------------
+
+while true; do
+    IFS= read -rsn1 key
+
+    case "$key" in
+        q|Q|$'\e')
+            clear
+            exit 0
+            ;;
+    esac
+done
