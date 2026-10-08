@@ -145,6 +145,11 @@ typedef struct {
 	int monitor;
 } Rule;
 
+typedef struct {
+	const char *cmd;
+	int id;
+} StatusCmd;
+
 /* function declarations */
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
@@ -249,6 +254,9 @@ static void zoom(const Arg *arg);
 /* variables */
 static const char broken[] = "broken";
 static char stext[1024];
+static int statusw;
+static int statuscmdn;
+static char lastbutton[] = "-";
 static int statussig;
 static int statusw;
 static pid_t statuspid = -1;
@@ -444,53 +452,35 @@ buttonpress(XEvent *e)
 	char *text, *s, ch;
 
 	click = ClkRootWin;
-
 	/* focus monitor if necessary */
 	if ((m = wintomon(ev->window)) && m != selmon) {
 		unfocus(selmon->sel, 1);
 		selmon = m;
 		focus(NULL);
 	}
-
 	if (ev->window == selmon->barwin) {
 		i = x = 0;
 		do
 			x += TEXTW(tags[i]);
 		while (ev->x >= x && ++i < LENGTH(tags));
-
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
-		} else if (ev->x < x + TEXTW(selmon->ltsymbol)) {
-			click = ClkLtSymbol;
 		} else if (ev->x > selmon->ww - statusw) {
+			*lastbutton = '0' + ev->button;
 			x = selmon->ww - statusw;
 			click = ClkStatusText;
-
 			statussig = 0;
-			for (text = s = stext; *s && x <= (unsigned int)ev->x; s++) {
-				if ((unsigned char)*s < ' ') {
+			for (text = s = stext; *s && x <= ev->x; s++) {
+				if ((unsigned char)(*s) < ' ') {
 					ch = *s;
 					*s = '\0';
 					x += TEXTW(text) - lrpad;
 					*s = ch;
 					text = s + 1;
-					if (x >= (unsigned int)ev->x)
+					if (x >= ev->x)
 						break;
 					statussig = ch;
-				} else if (*s == '^') {
-					*s = '\0';
-					x += TEXTW(text) - lrpad;
-					*s = '^';
-					s++;
-					if (*s == 'f')
-						x += atoi(++s);
-					while (*s && *s != '^')
-						s++;
-					if (*s == '^')
-						s++;
-					text = s;
-					s--;
 				}
 			}
 		}
@@ -500,7 +490,6 @@ buttonpress(XEvent *e)
 		XAllowEvents(dpy, ReplayPointer, CurrentTime);
 		click = ClkClientWin;
 	}
-
 	for (i = 0; i < LENGTH(buttons); i++)
 		if (click == buttons[i].click && buttons[i].func
 		&& buttons[i].button == ev->button
@@ -510,7 +499,6 @@ buttonpress(XEvent *e)
 					? &arg
 					: &buttons[i].arg);
 }
-
 
 void
 checkotherwm(void)
@@ -1900,11 +1888,10 @@ sigstatusbar(const Arg *arg)
 
 	if (!statussig)
 		return;
-	sv.sival_int = arg->i;
+	sv.sival_int = arg->i | (statussig << 8);	/* pack signal + button */
 	if ((statuspid = getstatusbarpid()) <= 0)
 		return;
-
-	sigqueue(statuspid, SIGRTMIN+statussig, sv);
+	sigqueue(statuspid, SIGUSR1, sv);		/* must be SIGUSR1 for this dwmblocks */
 }
 
 void
@@ -1918,6 +1905,17 @@ spawn(const Arg *arg)
 	if (fork() == 0) {
 		if (dpy)
 			close(ConnectionNumber(dpy));
+		if (arg->v == statuscmd) {
+			for (int i = 0; i < LENGTH(statuscmds); i++) {
+				if (statuscmdn == statuscmds[i].id) {
+					statuscmd[2] = statuscmds[i].cmd;
+					setenv("BUTTON", lastbutton, 1);
+					break;
+				}
+			}
+			if (!statuscmd[2])
+				exit(EXIT_SUCCESS);
+		}
 		setsid();
 
 		sigemptyset(&sa.sa_mask);
@@ -2263,8 +2261,23 @@ updatesizehints(Client *c)
 void
 updatestatus(void)
 {
-	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
+	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext))) {
 		strcpy(stext, "dwm-"VERSION);
+		statusw = TEXTW(stext) - lrpad + 2;
+	} else {
+		char *text, *s, ch;
+		statusw = 0;
+		for (text = s = stext; *s; s++) {
+			if ((unsigned char)(*s) < ' ') {
+				ch = *s;
+				*s = '\0';
+				statusw += TEXTW(text) - lrpad;
+				*s = ch;
+				text = s + 1;
+			}
+		}
+		statusw += TEXTW(text) - lrpad + 2;
+	}
 	drawbar(selmon);
 }
 

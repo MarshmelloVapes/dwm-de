@@ -5,10 +5,10 @@ static const Block blocks[] = {
 	{ "",     "~/.scripts/sb-powerprofiles", 0, 13 },
     {"^c#ebdbb2^ | ^d^", NULL, 0, 0},
 
-    {"^c#8ec07c^", "~/.scripts/sb-weather", 3600, 0},
+    {"^c#8ec07c^", "~/.scripts/sb-weather", 3600, 5},
     {"^c#ebdbb2^ | ^d^", NULL, 0, 0},
 
-    {"^c#fabd2f^RAM ", "free -m | awk '/Mem:/ {printf \"%d%%\", $3*100/$2 }'", 5, 0},
+    {"^c#fabd2f^RAM ", "free -m | awk '/Mem:/ {printf \"%d%%\", $3*100/$2 }'", 5, 6},
     {"^c#ebdbb2^ | ^d^", NULL, 0, 0},
 
     {"^c#83a598^VOL ", "~/.scripts/volume.sh", 0, 10},
@@ -17,10 +17,10 @@ static const Block blocks[] = {
     {"^c#83a321^SCR ", "~/.scripts/brightness.sh", 0, 20},
     {"^c#ebdbb2^ | ^d^", NULL, 0, 0},
 
-    { "^c#fb4934^",     "~/.scripts/battery", 30, 0 },
+    { "^c#fb4934^",     "~/.scripts/battery", 30, 7 },
     {"^c#ebdbb2^ | ^d^", NULL, 0, 0},
 
-    {"^c#d3869b^", "date '+%d %b %H:%M '", 60, 0},
+    {"^c#d3869b^", "date '+%d %b %H:%M '", 60, 1},
 };
 
 //Sets delimiter between status commands. NULL character ('\0') means no delimiter.
