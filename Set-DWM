@@ -4,7 +4,7 @@ echo "Installing Requirements...\n"
 
 sudo pacman -S xorg xorg-xinit xorg-xrandr base-devel rofi alacritty bluez bluez-utils bluetui \
 firefox brightnessctl ttf-jetbrains-mono-nerd picom fish starship \
-thunar neovim obsidian xpdf feh shotgun udisks2 obsidian xpdf unzip power-profiles-daemon yt-dlp
+thunar neovim obsidian xpdf feh shotgun udisks2 obsidian xpdf unzip power-profiles-daemon yt-dlp jq
 
 sudo systemctl enable --now bluetooth.service 
 
@@ -33,6 +33,7 @@ sudo chmod +x ~/.scripts/ppd-watcher
 sudo chmod +x ~/.scripts/sb-powerprofiles
 sudo chmod +x ~/.scripts/battery
 sudo chmod +x ~/.scripts/dwm-cheatsheet
+sudo chmod +x ~/.scripts/sb-weather
 
 echo "DWM & DWMBLOCKS...\n"
 

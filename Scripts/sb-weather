@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# Open-Meteo weather for dwmblocks
+# Requires: curl, jq
+
+# Put your lat
+LAT="00.0000"
+LON="-00.0000"
+
+API="https://api.open-meteo.com/v1/forecast"
+
+weather=$(curl -sf \
+    "${API}?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weather_code&temperature_unit=celsius&timezone=America%2FToronto" \
+    | jq -r '.current | "\(.temperature_2m)|\(.weather_code)"')
+
+# API failure
+if [ -z "$weather" ]; then
+    echo " Weather unavailable"
+    exit 0
+fi
+
+temperature="${weather%%|*}"
+code="${weather##*|}"
+
+case "$code" in
+    0)
+        icon="󱔐"
+        condition="Clear"
+        ;;
+    1)
+        icon="🌤"
+        condition="Mainly Clear"
+        ;;
+    2)
+        icon="󰖕"
+        condition="Partly Cloudy"
+        ;;
+    3)
+        icon=""
+        condition="Overcast"
+        ;;
+    45|48)
+        icon=""
+        condition="Foggy"
+        ;;
+    51|53|55|56|57)
+        icon=""
+        condition="Drizzle"
+        ;;
+    61|63|65|66|67)
+        icon=""
+        condition="Rain"
+        ;;
+    71|73|75|77)
+        icon=""
+        condition="Snow"
+        ;;
+    80|81|82)
+        icon=""
+        condition="Rain Showers"
+        ;;
+    85|86)
+        icon=""
+        condition="Snow Showers"
+        ;;
+    95|96|99)
+        icon=""
+        condition="Thunderstorm"
+        ;;
+    *)
+        icon=""
+        condition="Unknown"
+        ;;
+esac
+
+echo "${icon} ${condition} ${temperature}°C"
