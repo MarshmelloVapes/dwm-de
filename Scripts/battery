@@ -48,7 +48,7 @@ case "$STATE" in
         echo "󰂄 ${PERCENT}% charging"
         ;;
     fully-charged)
-        echo "󰁹 ${PERCENT}% full"
+        echo "󰁹 ${PERCENT}%"
         ;;
     discharging)
         if [ -n "$TIME" ]; then

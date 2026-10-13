@@ -38,7 +38,7 @@ case $BLOCK_BUTTON in
         pkill -RTMIN+13 dwmblocks
         ;;
     6) # Shift + left click → edit this script
-        setsid -f "$TERMINAL" -e "$EDITOR" "$0"
+        setsid -f "alacritty" -e "helix" "$0"
         ;;
 esac
 

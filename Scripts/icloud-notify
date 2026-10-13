@@ -1,0 +1,22 @@
+#!/bin/bash
+
+MAILDIR="$HOME/.local/share/mail"
+
+NEWEST=$(find "$MAILDIR" -type f -path '*/new/*' \
+    -printf '%T@ %p\n' 2>/dev/null \
+    | sort -nr | head -n1 | cut -d' ' -f2-)
+
+if [[ -n "$NEWEST" && -r "$NEWEST" ]]; then
+    SENDER=$(grep -im1 '^From:' "$NEWEST" |
+        cut -d: -f2- | sed 's/^ *//')
+    SUBJECT=$(grep -im1 '^Subject:' "$NEWEST" |
+        cut -d: -f2- | sed 's/^ *//')
+
+    notify-send -a "iCloud Mail" -i mail-unread \
+        "${SENDER:-New email}" \
+        "${SUBJECT:-You have a new message}"
+else
+    notify-send -a "iCloud Mail" -i mail-unread \
+        "New iCloud Mail" "You have received a new message."
+fi
+

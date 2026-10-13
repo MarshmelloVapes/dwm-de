@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Usage:
+#   stock-price AAPL
+#   stock-price RY.TO
+#   stock-price SHOP.TO
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 <ticker>"
+    echo "Example: $0 AAPL"
+    echo "         $0 RY.TO"
+    exit 1
+fi
+
+TICKER=$(echo "$1" | tr '[:lower:]' '[:upper:]')
+
+URL="https://query1.finance.yahoo.com/v8/finance/chart/${TICKER}?interval=1d&range=1d"
+
+RESPONSE=$(curl -sS \
+    -H "User-Agent: Mozilla/5.0" \
+    "$URL")
+
+# Make sure jq is installed
+if ! command -v jq >/dev/null 2>&1; then
+    echo "Error: jq is required."
+    echo "Install it with: sudo pacman -S jq"
+    exit 1
+fi
+
+# Check for a valid response
+if ! echo "$RESPONSE" | jq -e '.chart.result[0]' >/dev/null 2>&1; then
+    echo "Error: Could not find stock: $TICKER"
+    exit 1
+fi
+
+PRICE=$(echo "$RESPONSE" | jq -r '.chart.result[0].meta.regularMarketPrice')
+CURRENCY=$(echo "$RESPONSE" | jq -r '.chart.result[0].meta.currency')
+SYMBOL=$(echo "$RESPONSE" | jq -r '.chart.result[0].meta.symbol')
+
+# Make sure we actually received a price
+if [ "$PRICE" = "null" ] || [ -z "$PRICE" ]; then
+    echo "Error: No current price available for $TICKER"
+    exit 1
+fi
+
+printf "%s  \$%.2f %s\n" "$SYMBOL" "$PRICE" "$CURRENCY"

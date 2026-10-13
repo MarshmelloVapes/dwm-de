@@ -1,0 +1,103 @@
+#!/bin/bash
+
+# ==========================================
+# dwmblocks stock ticker
+# ==========================================
+
+STOCKS=(
+    "AAPL"
+    "MSFT"
+    "RY.TO"
+    "TD.TO"
+    "SHOP.TO"
+)
+
+STATE_FILE="/tmp/dwmblocks-stock-index"
+SIGNAL=14
+
+# ------------------------------------------
+# Current stock index
+# ------------------------------------------
+
+if [ -f "$STATE_FILE" ]; then
+    INDEX=$(cat "$STATE_FILE")
+else
+    INDEX=0
+fi
+
+if ! [[ "$INDEX" =~ ^[0-9]+$ ]] || [ "$INDEX" -ge "${#STOCKS[@]}" ]; then
+    INDEX=0
+fi
+
+# ------------------------------------------
+# Mouse actions
+# ------------------------------------------
+
+case "$BLOCK_BUTTON" in
+
+    1)
+        # Left click - next stock
+        INDEX=$((INDEX + 1))
+
+        if [ "$INDEX" -ge "${#STOCKS[@]}" ]; then
+            INDEX=0
+        fi
+
+        echo "$INDEX" > "$STATE_FILE"
+
+        # Tell dwmblocks to refresh this block
+        pkill -RTMIN+14 dwmblocks
+        ;;
+
+    3)
+        # Right click - previous stock
+        INDEX=$((INDEX - 1))
+
+        if [ "$INDEX" -lt 0 ]; then
+            INDEX=$((${#STOCKS[@]} - 1))
+        fi
+
+        echo "$INDEX" > "$STATE_FILE"
+
+        pkill -RTMIN+14 dwmblocks
+        ;;
+
+esac
+
+TICKER="${STOCKS[$INDEX]}"
+
+# ------------------------------------------
+# Request stock price
+# ------------------------------------------
+
+RESPONSE=$(curl -sS \
+    --connect-timeout 2 \
+    --max-time 4 \
+    -A "Mozilla/5.0" \
+    "https://query1.finance.yahoo.com/v8/finance/chart/${TICKER}?interval=1d&range=1d" \
+    2>/dev/null)
+
+# ------------------------------------------
+# Parse response
+# ------------------------------------------
+
+if [ -z "$RESPONSE" ]; then
+    printf "%s --\n" "$TICKER"
+    exit 0
+fi
+
+PRICE=$(echo "$RESPONSE" | jq -r \
+    '.chart.result[0].meta.regularMarketPrice // empty' 2>/dev/null)
+
+CURRENCY=$(echo "$RESPONSE" | jq -r \
+    '.chart.result[0].meta.currency // empty' 2>/dev/null)
+
+# ------------------------------------------
+# Output
+# ------------------------------------------
+
+if [ -z "$PRICE" ]; then
+    printf "%s --\n" "$TICKER"
+else
+    printf "%s \$%.2f %s\n" "$TICKER" "$PRICE" "$CURRENCY"
+fi

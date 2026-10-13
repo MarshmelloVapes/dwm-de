@@ -22,7 +22,7 @@ static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 
-static const char col_fg[]    = "#f2e5bc"; /* background (bg0 soft) */
+static const char col_fg[]    = "#fffbee"; /* background (bg0 soft) */
 static const char col_bg[]    = "#3c3836"; /* foreground (fg0) */
 static const char col_blk[]   = "#7c6f64"; /* neutral gray */
 static const char col_red[]   = "#cc241d"; /* red */

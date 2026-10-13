@@ -12,3 +12,5 @@ Install script should get everything all set up and installed. \
 
 This is a work in progress as I continue to learn DWM. The setup will change a lot. \
 
+Install NEOMUTT if you wish using luke smith's wizard for easy access. Best to install everything. Ensure ICLOUD sending port is correct. By default, it's wrong.
+

@@ -1,0 +1,2 @@
+#!/bin/sh
+printf "^c#d3869b^%s^d^\n" "$(date '+%d %b %H:%M ')"

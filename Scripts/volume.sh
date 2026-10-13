@@ -14,3 +14,4 @@ if [ "$mute" = "yes" ]; then
 else
     echo "${vol}"
 fi
+

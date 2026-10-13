@@ -3,7 +3,6 @@
 # Open-Meteo weather for dwmblocks
 # Requires: curl, jq
 
-# Put your lat
 LAT="00.0000"
 LON="-00.0000"
 
@@ -73,4 +72,4 @@ case "$code" in
         ;;
 esac
 
-echo "${icon} ${condition} ${temperature}°C"
+echo "${icon}  ${condition} ${temperature}°C"
