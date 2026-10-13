@@ -4,6 +4,7 @@ if status is-interactive
     alias sv "sudo nvim"
     alias sd "udisksctl mount -b /dev/mmcblk0p1"
     alias ppd "~/.scripts/PPD.sh"
+    alias vphoto "feh --geometry 1920x1080 --auto-zoom -."
 end
 
 function fish_greeting
@@ -29,3 +30,7 @@ end
 
 
 starship init fish | source
+
+set -gx EDITOR nvim
+set -gx VISUAL nvim
+set -gx TERMINAL alacritty
