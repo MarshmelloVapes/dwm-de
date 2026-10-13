@@ -34,6 +34,7 @@ sudo chmod +x ~/.scripts/sb-powerprofiles
 sudo chmod +x ~/.scripts/battery
 sudo chmod +x ~/.scripts/dwm-cheatsheet
 sudo chmod +x ~/.scripts/sb-weather
+sudo chmod +x ~/.scripts/sb-mail
 
 echo "DWM & DWMBLOCKS...\n"
 
