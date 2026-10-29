@@ -4,9 +4,10 @@ echo "Installing Requirements...\n"
 
 sudo pacman -S xorg xorg-xinit xorg-xrandr base-devel rofi alacritty bluez bluez-utils bluetui \
 firefox brightnessctl ttf-jetbrains-mono-nerd picom fish starship \
-thunar neovim obsidian xpdf feh shotgun udisks2 obsidian xpdf unzip power-profiles-daemon yt-dlp jq
+dolphin neovim obsidian xpdf feh shotgun udisks2 obsidian xpdf unzip power-profiles-daemon yt-dlp jq \
+xdg-utils xdg-desktop-portal xdg-desktop-portal-gtk
 
-sudo systemctl enable --now bluetooth.service 
+sudo systemctl enable --now bluetooth.service
 
 mkdir ~/.install
 mkdir ~/.scripts
@@ -25,16 +26,7 @@ cp ./Home/* ~/.
 echo "Coping Scripts...\n"
 cp ./Scripts/* ~/.scripts
 
-sudo chmod +x ~/.scripts/autostart.sh
-sudo chmod +x ~/.scripts/volume.sh
-sudo chmod +x ~/.scripts/brightness.sh
-sudo chmod +x ~/.scripts/PPD.sh
-sudo chmod +x ~/.scripts/ppd-watcher
-sudo chmod +x ~/.scripts/sb-powerprofiles
-sudo chmod +x ~/.scripts/battery
-sudo chmod +x ~/.scripts/dwm-cheatsheet
-sudo chmod +x ~/.scripts/sb-weather
-sudo chmod +x ~/.scripts/sb-mail
+sudo chmod +x ~/.scripts/*
 
 echo "DWM & DWMBLOCKS...\n"
 
