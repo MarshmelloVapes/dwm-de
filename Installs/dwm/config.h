@@ -116,6 +116,7 @@ static const char *statuscmd[] = { "/bin/sh", "-c", NULL, NULL };
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          SHCMD("~/.config/rofi/launchers/type-2/launcher.sh") },
+	{ MODKEY,			XK_l,	   spawn,          SHCMD("betterlockscreen -l") },
 	{ MODKEY,                       XK_f,      spawn,          {.v = firefox } },
   	{ MODKEY,                       XK_e,      spawn,          {.v = thunar } },
 	{ MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
@@ -160,12 +161,12 @@ static const Key keys[] = {
   	{ MODKEY|ShiftMask,     	XK_n,      cyclelayout,    {.i = -1 } },
 	// Vol
 	{ 0, XF86XK_AudioMute,      	spawn,     SHCMD("pactl set-sink-mute 0 toggle; kill -44 $(pidof dwmblocks)") },
-	{ 0,                       			XF86XK_AudioRaiseVolume,      spawn,         SHCMD("pactl set-sink-volume 0 +5%; pkill -RTMIN+10 dwmblocks") },
-	{ 0,                       			XF86XK_AudioLowerVolume,      spawn,         SHCMD("pactl set-sink-volume 0 -5%; pkill -RTMIN+10 dwmblocks") },
-	{ 0,                       			XF86XK_AudioMicMute,      spawn,         SHCMD("pactl set-source-mute 0 toggle") },
+	{ 0, XF86XK_AudioRaiseVolume,   spawn,     SHCMD("pactl set-sink-volume 0 +5%; pkill -RTMIN+10 dwmblocks") },
+	{ 0, XF86XK_AudioLowerVolume,   spawn,     SHCMD("pactl set-sink-volume 0 -5%; pkill -RTMIN+10 dwmblocks") },
+	{ 0, XF86XK_AudioMicMute,       spawn,     SHCMD("pactl set-source-mute 0 toggle") },
 	// Brightness
-	{ 0,                       			XF86XK_MonBrightnessUp,      spawn,         SHCMD("brightnessctl set 5%+; pkill -RTMIN+20 dwmblocks") },
-	{ 0,                       			XF86XK_MonBrightnessDown,      spawn,         SHCMD("brightnessctl set 5%-; pkill -RTMIN+20 dwmblocks") },
+	{ 0, XF86XK_MonBrightnessUp,    spawn,     SHCMD("brightnessctl set 5%+; pkill -RTMIN+20 dwmblocks") },
+	{ 0, XF86XK_MonBrightnessDown,  spawn,     SHCMD("brightnessctl set 5%-; pkill -RTMIN+20 dwmblocks") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
