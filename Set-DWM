@@ -5,7 +5,7 @@ echo "Installing Requirements...\n"
 sudo pacman -S xorg xorg-xinit xorg-xrandr base-devel rofi alacritty bluez bluez-utils bluetui \
 firefox brightnessctl ttf-jetbrains-mono-nerd picom fish starship \
 dolphin neovim obsidian xpdf feh shotgun udisks2 obsidian xpdf unzip power-profiles-daemon yt-dlp jq \
-xdg-utils xdg-desktop-portal xdg-desktop-portal-gtk
+xdg-utils xdg-desktop-portal xdg-desktop-portal-gtk xclip
 
 sudo systemctl enable --now bluetooth.service
 
